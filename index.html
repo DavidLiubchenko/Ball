@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px solid rgb(17, 17, 17);
+      background-color: #2833cf;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    #ball {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      
+      -webkit-transition: all 1s;
+      -moz-transition: all 1s;
+      -o-transition: all 1s;
+      transition: all 1s;
+    }
+  </style>
+</head>
+
+<body style="height:2000px">
+
+  Нажмите на поле для перемещения мяча.
+  <br>
+
+
+  <div id="field">
+    <img src="https://ru.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+
+  <script>
+    field.onclick = function(event){
+      let fieldCoords = field.getBoundingClientRect();
+
+      let coordBall = {
+        top: event.clientY - fieldCoords.top - field.clientTop - ball.clientWidth/2 ,
+        left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientHeight/2
+      }
+      //запрещаем пересекать границы сверху и слева
+      coordBall.top = (coordBall.top<0)? 0: coordBall.top;
+      coordBall.left = (coordBall.left<0)? 0: coordBall.left;
+      //снизу
+      if (coordBall.top + ball.clientHeight > field.clientHeight) {
+        coordBall.top = field.clientHeight - ball.clientHeight;
+      }
+      //справа
+      if (coordBall.left + ball.clientWidth > field.clientWidth) {
+        coordBall.left = field.clientWidth - ball.clientWidth;
+      }
+
+      ball.style.top = coordBall.top + "px";
+      ball.style.left = coordBall.left + "px"
+
+    }
+  </script>
+
+</body>
+</html>
